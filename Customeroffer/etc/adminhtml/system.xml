@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="pkgroup_customeroffer" translate="label" sortOrder="100">
+            <label>Pkgroup Offer Page</label>
+        </tab>
+        <section id="pkgroup_customeroffer" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Category setting</label> 
+            <tab>pkgroup_customeroffer</tab>
+            <resource>Pkgroup_Customeroffer::Pkgroup_Customeroffer</resource>
+            <group id="configuration" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                 <!-- group wise selection to hide price  -->
+                <field id="categories" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Categories</label>
+                    <comment><![CDATA[Categories: seprated by "," comma e.g 3,5,7]]></comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
