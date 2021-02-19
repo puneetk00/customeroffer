@@ -1,0 +1,29 @@
+{
+  "name": "Pkgroup/Customeroffer",
+  "description": "Magento 2 Offer page with multipal category tab.",
+  "require": {
+    "php": "~7.0.0"
+  },
+  "type": "magento2-module",
+  "version": "1.0.0",
+  "license": [
+    "OSL-3.0",
+    "AFL-3.0"
+  ],
+  "authors": [
+    {
+      "name": "Pkgroup",
+      "email": "puneetk00@gmail.com",
+      "homepage": "http://www.mg2dev.com",
+      "role": "Leader"
+    }
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Pkgroup\\Customeroffer\\": ""
+    }
+  }
+}

@@ -1,11 +1,11 @@
 <?php
+/*
+* Author : Pkgroup
+* Package : Pkgroup_Customeroffer
+* Developer : Puneet Kumar
+*/
 namespace Pkgroup\Customeroffer\Model\Total\Quote;
-/**
- * Class Custom
- * Puneet Kumar
- * Email : puneetk00@gmail.com
- * @package Pkgroup\Customeroffer\Model\Total\Quote
- */
+
 class Custom extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal
 {
 
@@ -45,7 +45,6 @@ class Custom extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal
 				 }
 			 }
 			 $numberitem = $quote->getItemsCount();
-			 //if($numberitem < 1); die;
 			 $dis = 0;
 			 switch($numberitem){
 				 case 2:
@@ -69,7 +68,7 @@ class Custom extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal
 			 }
 			 $label = "special discount $dis%";
 			 $TotalAmount=$total->getSubtotal();
-			 $TotalAmount=($TotalAmount*$dis)/100; //Set 10% discount
+			 $TotalAmount=($TotalAmount*$dis)/100;
 		 
 			 $discountAmount ="-".$TotalAmount; 
 			 $appliedCartDiscount = 0;

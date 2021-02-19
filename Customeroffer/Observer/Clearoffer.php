@@ -1,12 +1,9 @@
 <?php
-    /**
-     * Pkgroup
-     *
-     * @category    Pkgroup
-     * @package     Pkgroup_Customeroffer
-     * @author      Webkul Software Private Limited
-     *
-     */
+/*
+* @Author : Pkgroup
+* @Package : Pkgroup_Customeroffer
+* @Developer : Puneet Kumar
+*/
 namespace Pkgroup\Customeroffer\Observer;
 
 use Magento\Framework\Event\ObserverInterface;

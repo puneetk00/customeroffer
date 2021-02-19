@@ -1,5 +1,11 @@
 <?php
 /*
+* @Author : Pkgroup
+* @Package : Pkgroup_Customeroffer
+* @Developer : Puneet Kumar
+*/
+
+/*
 * Pkgroup/Customeroffer/block/index
 */
 $categories = $block->getCategoryCollectionbyids();
@@ -109,6 +115,17 @@ span.product-price {
     float: left;
     height: 69px;
     background: #ccc;
+}
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+/* Styles */
+	ul.category-wrapper li {
+		padding: 2% !important;
+		width: 98% !important;
+	}
+	ul.cat_1 li.item {
+		width: 46% !important;
+	}
 }
 </style>
 <script>

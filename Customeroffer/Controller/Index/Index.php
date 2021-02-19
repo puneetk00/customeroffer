@@ -1,4 +1,9 @@
 <?php
+/*
+* @Author : Pkgroup
+* @Package : Pkgroup_Customeroffer
+* @Developer : Puneet Kumar
+*/
 namespace Pkgroup\Customeroffer\Controller\Index;
 
 class Index extends \Magento\Framework\App\Action\Action
@@ -9,7 +14,6 @@ class Index extends \Magento\Framework\App\Action\Action
 		\Magento\Framework\App\Action\Context $context,
 		\Magento\Framework\View\Result\PageFactory $pageFactory)
 	{
-		//$cart->truncate()->save();
 		$this->_pageFactory = $pageFactory;
 		return parent::__construct($context);
 	}

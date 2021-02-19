@@ -1,4 +1,9 @@
 <?php
+/*
+* Author : Pkgroup
+* Package : Pkgroup_Customeroffer
+* Developer : Puneet Kumar
+*/
 namespace Pkgroup\Customeroffer\Controller\Index;
 
 class Addtocart extends \Magento\Framework\App\Action\Action
