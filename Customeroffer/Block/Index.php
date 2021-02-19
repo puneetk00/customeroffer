@@ -41,13 +41,11 @@ class Index extends \Magento\Framework\View\Element\Template
 	}
     
     
-    public function getProductCollectionByCategories()
+    public function getProductCollectionByCategories($id)
     {
-		
-		$ids = explode(",",$this->getCategories());
         $collection = $this->_productCollectionFactory->create();
         $collection->addAttributeToSelect('*');
-        $collection->addCategoriesFilter(['in' => $ids]);
+        $collection->addCategoriesFilter(['in' => $id]);
         return $collection;
     }
 	
