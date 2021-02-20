@@ -1,9 +1,9 @@
 <?php
-/*
-* @Author : Pkgroup
-* @Package : Pkgroup_Customeroffer
-* @Developer : Puneet Kumar
-*/
+/**
+ * @Author : Pkgroup
+ * @Package : Pkgroup_Customeroffer
+ * @Developer : Puneet Kumar
+ */
 namespace Pkgroup\Customeroffer\Block;
 
 class Index extends \Magento\Framework\View\Element\Template
