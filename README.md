@@ -4,10 +4,10 @@ Description : Magento 2.x Custom discount page for producuts. if user select one
 ## Manual Installation guide 
 1.	You have to put extension in app/code/Pkgroup/Customeroffer. After that you need to enable module via below commands. 
 ### Steps: 
-php bin/magento module:enable Pkgroup_Customeroffer
-php bin/magento setup:upgrade --keep-generated
-php bin/magento setup:di:compile 
-php bin/magento setup:static-content:deploy -f
+#### php bin/magento module:enable Pkgroup_Customeroffer
+#### php bin/magento setup:upgrade --keep-generated
+#### php bin/magento setup:di:compile 
+#### php bin/magento setup:static-content:deploy -f
 
 Congratulation extension is installed and now you are ready to use. 
 
@@ -15,10 +15,10 @@ Congratulation extension is installed and now you are ready to use.
 1.	Download package via composer with below composer command and follow up below steps for installation. 
 
 ### Composer package download:
-composer require pkgroup/customeroffer
+#### composer require pkgroup/customeroffer
 ### Steps:
-php bin/magento module:enable Pkgroup_Customeroffer
-php bin/magento setup:upgrade --keep-generated
-php bin/magento setup:di:compile 
-php bin/magento setup:static-content:deploy -f
+#### php bin/magento module:enable Pkgroup_Customeroffer
+#### php bin/magento setup:upgrade --keep-generated
+#### php bin/magento setup:di:compile 
+#### php bin/magento setup:static-content:deploy -f
 
