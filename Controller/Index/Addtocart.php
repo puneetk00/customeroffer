@@ -14,6 +14,7 @@ class Addtocart extends \Magento\Framework\App\Action\Action
 	protected $_product;
 	protected $_cart;
 	protected $_url;
+	protected $_messageManager;
 
 
 	public function __construct(
@@ -26,7 +27,8 @@ class Addtocart extends \Magento\Framework\App\Action\Action
 		\Magento\Framework\Data\Form\FormKey $formKey,
 		\Magento\Checkout\Model\Session $checkoutSession,
 		\Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
-		\Magento\Quote\Model\QuoteFactory $quoteFactory
+		\Magento\Quote\Model\QuoteFactory $quoteFactory,
+		\Magento\Framework\Message\ManagerInterface $messageManager
 		)
 	{
 		$this->quoteFactory = $quoteFactory;
@@ -39,29 +41,30 @@ class Addtocart extends \Magento\Framework\App\Action\Action
 		$this->_url = $context->getUrl();
 		$this->_checkoutSession = $checkoutSession;
 		$this->customerRepository = $customerRepository;
+		$this->_messageManager = $messageManager;
 		return parent::__construct($context);
 	}
 
 	public function execute()
 	{
 		
-		 $cart = $this->_cart;
-		 $quoteItems = $this->_checkoutSession->getQuote()->getItemsCollection();
-			 foreach($quoteItems as $item)
-			 {
-				$cart->removeItem($item->getId())->save(); 
-			 }
+		$resultRedirect = $this->resultRedirectFactory->create();
+		$cart = $this->_cart;
+		$quoteItems = $this->_checkoutSession->getQuote()->getItemsCollection();
+		foreach($quoteItems as $item)
+		{
+			$cart->removeItem($item->getId())->save(); 
+		}
 		 
 		
 		$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-		//$this->_cart->truncate()->save();
 		$quote = $this->_checkoutSession->getQuote();
 		
 		$customerSession = $objectManager->get('\Magento\Customer\Model\Session');
 		$urlInterface = $objectManager->get('\Magento\Framework\UrlInterface');
 		
 		if(!$customerSession->isLoggedIn()) {
-			$resultRedirect = $this->resultRedirectFactory->create();
+			
 			$customerSession->setAfterAuthUrl($this->_url->getUrl('offer'));
 			
 			$customerSession->authenticate();
@@ -70,12 +73,13 @@ class Addtocart extends \Magento\Framework\App\Action\Action
 		}
 		
 		$data = $this->getRequest()->getParam("productsids"); 
-		if($data == ''){
-			$this->getResponse()->setRedirect('*/*/*');
-		}
-		
-		//$this->_cart->createEmptyCart();
 		$products = explode(",",$data);
+		if(count($products) == 0 or $data == ''){
+			$message = "You have not selected any product.";
+			$this->_messageManager->addError($message);
+			$resultRedirect->setPath('offer');
+			return $resultRedirect;
+		}
 		foreach($products as $productId){
 			$product = $this->_product->create()->load($productId);
 			$params = array();      
@@ -91,7 +95,6 @@ class Addtocart extends \Magento\Framework\App\Action\Action
         $this->_cart->getQuote()->setTotalsCollectedFlag(false)->collectTotals()->save();
 		
 		$this->_checkoutSession->setOfferSet('rhkgsk%$#0003');
-		$resultRedirect = $this->resultRedirectFactory->create();
 		$resultRedirect->setPath('checkout');
 		return $resultRedirect;   
 	}
