@@ -15,27 +15,28 @@ class Addtocart extends \Magento\Framework\App\Action\Action
 	protected $_cart;
 	protected $_url;
 	protected $_messageManager;
+	protected $_customersession;
 
 
 	public function __construct(
 		\Magento\Framework\App\Action\Context $context,
 		\Magento\Framework\View\Result\PageFactory $pageFactory,
 		\Magento\Quote\Api\CartRepositoryInterface $quote,
-		\Magento\Checkout\Model\Session $checkout,
 		\Magento\Catalog\Model\productFactory $product,
 		\Magento\Checkout\Model\Cart $cart,
 		\Magento\Framework\Data\Form\FormKey $formKey,
 		\Magento\Checkout\Model\Session $checkoutSession,
 		\Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
 		\Magento\Quote\Model\QuoteFactory $quoteFactory,
-		\Magento\Framework\Message\ManagerInterface $messageManager
+		\Magento\Framework\Message\ManagerInterface $messageManager,
+		\Magento\Customer\Model\Session $customersession
 		)
 	{
+		$this->_customersession = $customersession;
 		$this->quoteFactory = $quoteFactory;
 		$this->formKey = $formKey;
 		$this->_cart = $cart;
 		$this->_quote = $quote;
-		$this->_checkout = $checkout;
 		$this->_product = $product;
 		$this->_pageFactory = $pageFactory;
 		$this->_url = $context->getUrl();
@@ -47,7 +48,6 @@ class Addtocart extends \Magento\Framework\App\Action\Action
 
 	public function execute()
 	{
-		
 		$resultRedirect = $this->resultRedirectFactory->create();
 		$cart = $this->_cart;
 		$quoteItems = $this->_checkoutSession->getQuote()->getItemsCollection();
@@ -56,18 +56,15 @@ class Addtocart extends \Magento\Framework\App\Action\Action
 			$cart->removeItem($item->getId())->save(); 
 		}
 		 
-		
-		$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 		$quote = $this->_checkoutSession->getQuote();
 		
-		$customerSession = $objectManager->get('\Magento\Customer\Model\Session');
-		$urlInterface = $objectManager->get('\Magento\Framework\UrlInterface');
+		$customerSession = $this->_customersession;
 		
 		if(!$customerSession->isLoggedIn()) {
-			
 			$customerSession->setAfterAuthUrl($this->_url->getUrl('offer'));
-			
 			$customerSession->authenticate();
+			$message = "You are not logged in.";
+			$this->_messageManager->addError($message);
             $resultRedirect->setPath('customer/account/login/');
             return $resultRedirect;   
 		}
