@@ -34,14 +34,14 @@ class Custom extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal
 	)
 	{
 			if($this->_checkoutSession->getOfferSet() != 'rhkgsk%$#0003'){
-				return;
+				return $this;
 			}
 			
 			parent::collect($quote, $shippingAssignment, $total);
 			 $address = $shippingAssignment->getShipping()->getAddress();
 			 foreach($quote->getAllItems() as $item){
 				 if($item->getQty() > 1){
-					 return;
+					 return $this;
 				 }
 			 }
 			 $numberitem = $quote->getItemsCount();
@@ -64,7 +64,7 @@ class Custom extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal
 				 
 			 }
 			 if($dis == 0){
-				 return;
+				 return $this;
 			 }
 			 $label = "special discount $dis%";
 			 $TotalAmount=$total->getSubtotal();

@@ -50,6 +50,7 @@ class Index extends \Magento\Framework\View\Element\Template
     {
         $collection = $this->_productCollectionFactory->create();
         $collection->addAttributeToSelect('*');
+        $collection->addAttributeToFilter('type'=>['in' => 'simple']);
         $collection->addCategoriesFilter(['in' => $id]);
         return $collection;
     }
