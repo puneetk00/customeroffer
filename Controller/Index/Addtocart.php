@@ -13,6 +13,7 @@ class Addtocart extends \Magento\Framework\App\Action\Action
 	protected $_checkout;
 	protected $_product;
 	protected $_cart;
+	protected $_cartadd;
 	protected $_url;
 	protected $_messageManager;
 	protected $_customersession;
@@ -35,6 +36,7 @@ class Addtocart extends \Magento\Framework\App\Action\Action
 		$this->_customersession = $customersession;
 		$this->quoteFactory = $quoteFactory;
 		$this->formKey = $formKey;
+		$this->_cartadd = $cart;
 		$this->_cart = $cart;
 		$this->_quote = $quote;
 		$this->_product = $product;
@@ -48,6 +50,8 @@ class Addtocart extends \Magento\Framework\App\Action\Action
 
 	public function execute()
 	{
+		
+		$this->_cart->getQuote()->setTotalsCollectedFlag(false)->collectTotals()->save();
 		$resultRedirect = $this->resultRedirectFactory->create();
 		$cart = $this->_cart;
 		$quoteItems = $this->_checkoutSession->getQuote()->getItemsCollection();
@@ -55,8 +59,6 @@ class Addtocart extends \Magento\Framework\App\Action\Action
 		{
 			$cart->removeItem($item->getId())->save(); 
 		}
-		 
-		$quote = $this->_checkoutSession->getQuote();
 		
 		$customerSession = $this->_customersession;
 		
@@ -77,19 +79,20 @@ class Addtocart extends \Magento\Framework\App\Action\Action
 			$resultRedirect->setPath('offer');
 			return $resultRedirect;
 		}
+		
 		foreach($products as $productId){
 			$product = $this->_product->create()->load($productId);
 			$params = array();      
 			$params['form_key'] = $this->formKey->getFormKey();
 			$params['qty'] = 1;		
-			$this->_cart->addProduct($product, $params);
+			$this->_cart->addProduct($product, $params)->save();
 		}
-		
-		$this->_cart->save();
 		$this->_cart->getItems()->clear()->save();
+		$quote = $this->_checkoutSession->getQuote();
 		$quote->save();
-        $quote->collectTotals(); 
-        $this->_cart->getQuote()->setTotalsCollectedFlag(false)->collectTotals()->save();
+        $quote->collectTotals();
+		$this->_cart->getQuote()->setTotalsCollectedFlag(false)->collectTotals()->save();
+		
 		
 		$this->_checkoutSession->setOfferSet('rhkgsk%$#0003');
 		$resultRedirect->setPath('checkout');
