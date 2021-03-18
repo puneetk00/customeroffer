@@ -33,17 +33,18 @@ class Custom extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal
 	\Magento\Quote\Model\Quote\Address\Total $total
 	)
 	{
-			if($this->_checkoutSession->getOfferSet() != 'rhkgsk%$#0003'){
+			//if($this->_checkoutSession->getOfferSet() != 'rhkgsk%$#0003'){
 				return $this;
-			}
+			//}
 			
 			parent::collect($quote, $shippingAssignment, $total);
-			 $address = $shippingAssignment->getShipping()->getAddress();
-			 foreach($quote->getAllItems() as $item){
-				 if($item->getQty() > 1){
-					 return $this;
-				 }
-			 }
+			$address = $shippingAssignment->getShipping()->getAddress();
+			foreach($quote->getAllItems() as $item){
+			 // if($item->getQty() > 1){
+				 // return $this;
+			 // }
+			}
+			
 			 $numberitem = $quote->getItemsCount();
 			 $dis = 0;
 			 switch($numberitem){
@@ -63,39 +64,60 @@ class Custom extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal
 				 $dis = 0;
 				 
 			 }
-			 if($dis == 0){
-				 return $this;
-			 }
-			 $label = "special discount $dis%";
-			 $TotalAmount=$total->getSubtotal();
-			 $TotalAmount=($TotalAmount*$dis)/100;
+			 
+			 // if($dis == 0){
+				 // return $this;
+			 // }
+			//$writer = new \Zend\Log\Writer\Stream(BP . '/var/log/test.log');
+			//$logger = new \Zend\Log\Logger();
+			//$logger->addWriter($writer);
+			//$logger->info('Your text message');
+			
+			$discount = $dis; 
+			foreach($quote->getAllItems() as $item){
+				$price_dis = (($item->getProduct()->getPrice()*$discount)/100);
+				//$logger->info($item->getProduct()->getPrice()." == ".$item->getPrice());
+				if($item->getProduct()->getPrice() == $item->getPrice()) continue; 
+				$price = ($item->getProduct()->getPrice() - $price_dis);
+
+				//Set custom price
+				//$item->setDiscountAmount(20);
+				$item->setCustomPrice($price);
+				$item->setOriginalCustomPrice($price);
+				$item->getProduct()->setIsSuperMode(false);
+			}
+			 
+			 
+			 // $label = "special discount $dis%";
+			 // $TotalAmount=$total->getSubtotal();
+			 // $TotalAmount=($TotalAmount*$dis)/100;
 		 
-			 $discountAmount ="-".$TotalAmount; 
-			 $appliedCartDiscount = 0;
+			 // $discountAmount ="-".$TotalAmount; 
+			 // $appliedCartDiscount = 0;
 		 
-			if($total->getDiscountDescription())
-			 {
-				 $appliedCartDiscount = $total->getDiscountAmount();
-				 $discountAmount = $total->getDiscountAmount()+$discountAmount;
-				 $label = $total->getDiscountDescription().', '.$label;
-			 } 
+			// if($total->getDiscountDescription())
+			 // {
+				 // $appliedCartDiscount = $total->getDiscountAmount();
+				 // $discountAmount = $total->getDiscountAmount()+$discountAmount;
+				 // $label = $total->getDiscountDescription().', '.$label;
+			 // } 
 		 
-			 $total->setDiscountDescription($label);
-			 $total->setDiscountAmount($discountAmount);
-			 $total->setBaseDiscountAmount($discountAmount);
-			 $total->setSubtotalWithDiscount($total->getSubtotal() + $discountAmount);
-			 $total->setBaseSubtotalWithDiscount($total->getBaseSubtotal() + $discountAmount);
+			 // $total->setDiscountDescription($label);
+			 // $total->setDiscountAmount($discountAmount);
+			 // $total->setBaseDiscountAmount($discountAmount);
+			 // $total->setSubtotalWithDiscount($total->getSubtotal() + $discountAmount);
+			 // $total->setBaseSubtotalWithDiscount($total->getBaseSubtotal() + $discountAmount);
 		 
-			 if(isset($appliedCartDiscount))
-			 {
-				$total->addTotalAmount($this->getCode(), $discountAmount - $appliedCartDiscount);
-				$total->addBaseTotalAmount($this->getCode(), $discountAmount - $appliedCartDiscount);
-			 } 
-			 else 
-			 {
-				$total->addTotalAmount($this->getCode(), $discountAmount);
-				$total->addBaseTotalAmount($this->getCode(), $discountAmount);
-			 }
+			 // if(isset($appliedCartDiscount))
+			 // {
+				// $total->addTotalAmount($this->getCode(), $discountAmount - $appliedCartDiscount);
+				// $total->addBaseTotalAmount($this->getCode(), $discountAmount - $appliedCartDiscount);
+			 // } 
+			 // else 
+			 // {
+				// $total->addTotalAmount($this->getCode(), $discountAmount);
+				// $total->addBaseTotalAmount($this->getCode(), $discountAmount);
+			 // }
 		return $this;
 	}
  

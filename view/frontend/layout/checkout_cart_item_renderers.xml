@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="checkout_item_price_renderers"/>
+    <body>
+	<referenceBlock name="customer.wishlist">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Pkgroup_Customeroffer::cart/item/default.phtml</argument>
+            </action>
+	</referenceBlock>
+	<referenceBlock name="checkout.cart.item.renderers.simple">
+		<action method="setTemplate">
+			<argument name="template" xsi:type="string">Pkgroup_Customeroffer::cart/item/default.phtml</argument>
+		</action>
+	</referenceBlock>
+	<!-- 
+	//if template not overwrite uncomment this below code and comment above code.
+	<referenceBlock name="checkout.cart.item.renderers.default">
+		<arguments>
+			<argument name="template" xsi:type="string">Pkgroup_Customeroffer::cart/item/default.phtml</argument>
+		</arguments>
+	</referenceBlock>
+	<referenceBlock name="checkout.cart.item.renderers.simple">
+		<arguments>
+			<argument name="template" xsi:type="string">Pkgroup_Customeroffer::cart/item/default.phtml</argument>
+		</arguments>
+	</referenceBlock> -->
+    </body>
+</page>
