@@ -17,7 +17,6 @@ class Addtocart extends \Magento\Framework\App\Action\Action
 	protected $_url;
 	protected $_messageManager;
 	protected $_customersession;
-	protected $_registry;
 
 
 	public function __construct(
@@ -31,11 +30,9 @@ class Addtocart extends \Magento\Framework\App\Action\Action
 		\Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
 		\Magento\Quote\Model\QuoteFactory $quoteFactory,
 		\Magento\Framework\Message\ManagerInterface $messageManager,
-		\Magento\Customer\Model\Session $customersession,
-		\Magento\Framework\Registry $registry
+		\Magento\Customer\Model\Session $customersession
 		)
 	{
-		$this->_registry = $registry;
 		$this->_customersession = $customersession;
 		$this->quoteFactory = $quoteFactory;
 		$this->formKey = $formKey;
@@ -82,30 +79,7 @@ class Addtocart extends \Magento\Framework\App\Action\Action
 			$resultRedirect->setPath('offer');
 			return $resultRedirect;
 		}
-		$this->_registry->register('custom_price_active', true);
-		$dis = 0;
-		switch(count($products)){
-				 case 2:
-				 $dis = 5;
-				 break;
-				 case 3:
-				 $dis = 10;
-				 break;
-				 case 4:
-				 $dis = 15;
-				 break;
-				 case 5:
-				 $dis = 20;
-				 break;
-				 default:
-				 $dis = 0;
-				 
-		}
-		// print_r("discount");
-		// print_r(count($products));
-		// print_r($dis);
-		// die($dis);
-		$this->_registry->register('custom_price_active_discount', $dis);
+		
 		foreach($products as $productId){
 			$product = $this->_product->create()->load($productId);
 			$params = array();      
@@ -121,7 +95,7 @@ class Addtocart extends \Magento\Framework\App\Action\Action
 		
 		
 		$this->_checkoutSession->setOfferSet('rhkgsk%$#0003');
-		$resultRedirect->setPath('checkout/cart');
+		$resultRedirect->setPath('checkout');
 		return $resultRedirect;   
 	}
 }
