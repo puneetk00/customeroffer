@@ -23,7 +23,7 @@ Congratulation extension is installed and now you are ready to use.
 #### php bin/magento setup:static-content:deploy -f
 
 ## You can follow me on blog youtube and website. 
-[Youtube channel link](https://www.youtube.com/channel/UChb7DM9SspzrUVh4hnWL50A)
+[Youtube Channel](https://www.youtube.com/channel/UChb7DM9SspzrUVh4hnWL50A)
 
 [My Blog](https://php-scripts-form.blogspot.com/)
 
