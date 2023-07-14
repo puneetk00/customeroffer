@@ -6,14 +6,14 @@
         </tab>
         <section id="pkgroup_customeroffer" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
             <class>separator-top</class>
-            <label>Category setting</label> 
+            <label>Category Configration</label> 
             <tab>pkgroup_customeroffer</tab>
             <resource>Pkgroup_Customeroffer::Pkgroup_Customeroffer</resource>
             <group id="configuration" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
                  <!-- group wise selection to hide price  -->
                 <field id="categories" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Categories</label>
-                    <comment><![CDATA[Categories: seprated by "," comma e.g 3,5,7]]></comment>
+                    <comment><![CDATA[Add categories with seprated by "," comma e.g 3,5,7]]></comment>
                 </field>
             </group>
         </section>
